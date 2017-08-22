@@ -76,14 +76,14 @@ def trim(norm_k_list, params):
     # Fetch smallest norm_k for trimming with Trimmomatic min_len - Screed bug workaround
     params['min_len'] = max(map(int, norm_k_list.split(',')))
     cmd = (
-    'java -jar {pipe}/res/trimmomatic-0.33.jar PE'
+    'java -jar {pipe}/../res/trimmomatic-0.33.jar PE'
     ' {out}/raw/{name}.f.fastq'
     ' {out}/raw/{name}.r.fastq'
     ' {out}/trim/{name}.f_pe.fastq'
     ' {out}/trim/{name}.f_se.fastq'
     ' {out}/trim/{name}.r_pe.fastq'
     ' {out}/trim/{name}.r_se.fastq'
-    ' ILLUMINACLIP:{pipe}/res/illumina_adapters.fa:2:30:10'.format(**params))
+    ' ILLUMINACLIP:{pipe}/../res/illumina_adapters.fa:2:30:10'.format(**params))
     if params['qual_trim']:
         print('\tQuality trimming...')
         logger.info('Quality trimming...')

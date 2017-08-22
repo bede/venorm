@@ -1,0 +1,4 @@
+include res/illumina_adapters.fa
+include res/trimmomatic-0.33.jar
+include tests/data/060-660_r1_Cap1_F.fastq
+include tests/data/060-660_r1_Cap1_R.fastq

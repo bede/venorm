@@ -1,9 +1,17 @@
 # Venorm  
 
+[![PyPI version](https://badge.fury.io/py/venorm.svg)](https://badge.fury.io/py/venorm)
+
+
+
+**Currently in flux ✨**
+
+
+
 Venorm is a pipeline for assembling deep paired-end Illumina reads from populations of specific viruses. Coverage normalisation can dramatically improve assemblies of HIV and HCV, but should be parameterised on a per-sample basis for best results. Venorm accepts paired Illumina reads and lists of normalisation target coverage `c` and normalisation `k` values. Adapter sequences are trimmed with Trimmomatic and optionally quality trimmed with the `--qual-trim` flag, and then normalised in parallel using Khmer's `normalize-by-median.py` for each combination of `c` and `k`. Each set of reads is subsequently assembled with SPAdes. Assemblies may be classified with either k-mer based LCA or BLAST and plotted as bubbles. The `--lca` flag uses the One Codex real time API and requires an API key to be passed with `--one-codex-api-key <key>`. Command line options may be viewed by running `venorm --help`
-  
+
 ![Plot example](./plot.png)  
-  
+
 Feel free to get in touch via `b at bede dot im` or [Twitter](https://twitter.com/beconstant) 
 
 ## Dependencies  
@@ -11,20 +19,20 @@ Tested on OS X. I'm informed it also runs on Ubuntu with dependencies installed 
 Requires: Java, **Python 3.5**, SPAdes, Bowtie2, Samtools, VCFtools, BCFtools, SeqTK, Argh, Biopython, Khmer, Pandas, Plotly  
 Trimmomatic (jar file) is bundled inside `res/`  
 
-### Mac OS X
-Using Homebrew and pip is the easiest approach. I strongly recommend creating a new virtualenv to manage the Python dependencies  
+### Mac OS X & Linux
+Using Homebrew and pip is the easiest approach. I recommend creating a new virtualenv to manage Python dependencies .
 - `brew tap homebrew/homebrew-science`
 - `brew install python3 spades bowtie2 samtools vcftools bcftools seqtk`
-- `pip3 install argh numpy biopython khmer pandas plotly`  
+- `pip3 install venorm`  
 
 ## Usage
-Unzip `venorm.py` and the `res/` directory  
+
 Ensure dependencies are discoverable inside $PATH  
-N.B. Specify reads using absolute paths  
-Having issues? Set log level to `INFO` for verbose output and send me an email  
-  
+Specify reads using absolute paths if you encounter issues  
+Problems? Set log level to `INFO` for verbose output and send me an email  
+
 ```
-$ ./venorm.py help
+$ venorm help
 usage: venorm.py [-h] [-f FWD_FQ] [-r REV_FQ] [-q] [--blast] [-l]
                  [--norm-c-list NORM_C_LIST] [--norm-k-list NORM_K_LIST]
                  [-a ASM_K_LIST] [--no-norm]
@@ -65,7 +73,7 @@ Run sparNA without quality trimming (just adapter trimming) and using default SP
 ```
 ./venorm.py --lca --fwd-fq /Users/Bede/oxgl/1.f.fastq --rev-fq /Users/Bede/oxgl/1.r.fastq --norm-c-list 1,5,20,100 --norm-k-list 21,25,31 --out-prefix 1_no_qtrim-norm_c1c5c10c20c100k21k25k31 --threads 6  
 ```
-  
+
 Run sparNA with PHRED Q20 sliding window 3' trimming and using default SPAdes k-mers and additionally perform assembly without prior normalisation  
 
 ```
@@ -172,7 +180,8 @@ $
 
 # Issues
 
-- Running `./venorm.py` without arguments causes crash
+- Taxonomic classification is unreliable. This is soon to be outsourced to [`tictax`](https://github.com/bede/tictax)
+- Running `venorm` without arguments causes crash
 - If you experience issues with importing, first try using absolute paths
 - Does not accept interleaved reads
 - Uses 4 x 100MB hash tables for normalisation, which may be insufficient for some large datasets
