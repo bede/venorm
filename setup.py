@@ -41,5 +41,5 @@ setup(name='venorm',
                         'numpy==1.13.1',
                         'pandas==0.20.3',
                         'plotly==2.0.14',
-                        'requests==2.18.4'],
+                        'requests==2.20.0'],
       entry_points = {'console_scripts':['venorm=venorm.venorm:cli']})
